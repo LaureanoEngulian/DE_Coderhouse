@@ -88,7 +88,6 @@ services:
 
   airflow-webserver:
     <<: *airflow-common
-    # command: python -m pip install yfinance && webserver
     command: webserver
     ports:
       - 8080:8080
@@ -115,38 +114,3 @@ services:
       _AIRFLOW_WWW_USER_CREATE: 'true'
       _AIRFLOW_WWW_USER_USERNAME: ${_AIRFLOW_WWW_USER_USERNAME:-airflow}
       _AIRFLOW_WWW_USER_PASSWORD: ${_AIRFLOW_WWW_USER_PASSWORD:-airflow}
-
-  # spark:
-  #   image: lucastrubiano/spark:spark_3_4_1
-  #   hostname: spark
-  #   environment:
-  #     - SPARK_MODE=master
-  #     - SPARK_RPC_AUTHENTICATION_ENABLED=no
-  #     - SPARK_RPC_ENCRYPTION_ENABLED=no
-  #     - SPARK_LOCAL_STORAGE_ENCRYPTION_ENABLED=no
-  #     - SPARK_SSL_ENABLED=no
-  #   ports:
-  #     - '8090:8080'
-  #     - '7077:7077'
-  #   env_file:
-  #     - .env
-  #   volumes:
-  #     # - ./spark_working_dir:/home/spark/working_dir
-  #     - ./scripts/postgresql-42.5.2.jar:/tmp/drivers/postgresql-42.5.2.jar
-  
-  # spark-worker:
-  #   image: lucastrubiano/spark:spark_3_4_1
-  #   environment:
-  #     - SPARK_MODE=worker
-  #     - SPARK_MASTER_URL=spark://spark:7077
-  #     - SPARK_WORKER_MEMORY=1G
-  #     - SPARK_WORKER_CORES=1
-  #     - SPARK_RPC_AUTHENTICATION_ENABLED=no
-  #     - SPARK_RPC_ENCRYPTION_ENABLED=no
-  #     - SPARK_LOCAL_STORAGE_ENCRYPTION_ENABLED=no
-  #     - SPARK_SSL_ENABLED=no
-  #   env_file:
-  #     - .env
-  #   volumes:
-  #     # - ./spark_working_dir:/home/spark/working_dir
-  #     - ./scripts/postgresql-42.5.2.jar:/tmp/drivers/postgresql-42.5.2.jar
