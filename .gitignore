@@ -1,3 +1,6 @@
 venv/
 .env
 *.csv
+postgres_data/
+__pycache__
+logs
