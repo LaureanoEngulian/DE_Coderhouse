@@ -1,6 +1,7 @@
 # Este script está pensado para correr en Spark y hacer el proceso de ETL
-from datetime import datetime
+from os import environ as env
 import time
+from datetime import datetime
 
 import pandas as pd
 import psycopg2
@@ -9,18 +10,26 @@ import sqlalchemy as sa
 from dotenv import dotenv_values
 from sqlalchemy.engine.url import URL
 
+# for key, value in env.items():
+#     print('{}: {}'.format(key, value))
+
+print(env.get('HOST'))
+
 env_vars = dotenv_values('.env')
+print('test')
 
 class ETL_AlphaVantage:
     def __init__(self):
-        url = URL.create(
-        drivername='redshift+redshift_connector', # indicate redshift_connector driver and dialect will be used
-        host=env_vars['HOST'], # Amazon Redshift host
-        port=int(env_vars['PORT']), # Amazon Redshift port
-        database=env_vars['DATABASE'], # Amazon Redshift database
-        username=env_vars['USER'], # Amazon Redshift username
-        password=env_vars['PASSWORD'] # Amazon Redshift password
-        )
+        print(datetime.now())
+        # env_vars = dotenv_values('.env')
+        # url = URL.create(
+        # drivername='redshift+redshift_connector', # indicate redshift_connector driver and dialect will be used
+        # host=env_vars['HOST'], # Amazon Redshift host
+        # port=int(env_vars['PORT']), # Amazon Redshift port
+        # database=env_vars['DATABASE'], # Amazon Redshift database
+        # username=env_vars['USER'], # Amazon Redshift username
+        # password=env_vars['PASSWORD'] # Amazon Redshift password
+        # )
 
     def extract(self):
         """
@@ -166,8 +175,9 @@ class ETL_AlphaVantage:
         
     def run(self):
         raw_data = self.extract()
-        clean_data = self.transform(raw_data)
-        self.load(clean_data)
+        self.transform(raw_data)
+        # clean_data = self.transform(raw_data)
+        # self.load(clean_data)
 
 if __name__ == "__main__":
     print("Corriendo script")
